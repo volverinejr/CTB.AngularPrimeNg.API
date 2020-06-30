@@ -1,0 +1,250 @@
+<!-- NÃO RETIRAR  -->
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
+<p-toast [showTransitionOptions]="'300ms'"></p-toast>
+
+<br>
+<p-card>
+
+  <!-- GRID -->
+  <p-table #dt [value]="dataSouce" [loading]="carregando" [paginator]="true" [showCurrentPageReport]="true"
+    currentPageReportTemplate="{first} de {last} | Total {totalRecords} registros."
+    emptymessage="Nenhum registro encontrado" selectionMode="single" [resizableColumns]="true"
+    [rowsPerPageOptions]="[10,25,50]" totalRecords="{{totalRecords}}" [rows]="10" [lazy]="true"
+    (onLazyLoad)="lazyLoad($event)" [lazyLoadOnInit]="false" [globalFilterFields]="['id', 'codigo']" sortField="id"
+    sortOrder="1">
+
+    <ng-template pTemplate="caption">
+      <div class="ui-g">
+        <div class="ui-g-4"></div>
+        <div class="ui-g-4">Infração</div>
+        <div class="ui-g-4" style="text-align: right">
+          <input type="text" pInputText size="30" pTooltip="filtra por coluna selecionada" placeholder="Filtrar"
+            (input)="dt.filterGlobal($event.target.value, 'contains')">
+        </div>
+      </div>
+    </ng-template>
+
+    <!-- CABECALHO -->
+    <ng-template pTemplate="header" class="ui-column-title">
+      <tr>
+        <th width="10%" pResizableColumn pSortableColumn="id"># <p-sortIcon field="id"></p-sortIcon></th>
+        <th width="8%" pResizableColumn pSortableColumn="codigo">Código <p-sortIcon field="codigo"></p-sortIcon></th>
+        <th pResizableColumn pSortableColumn="descricao">Descrição <p-sortIcon field="descricao"></p-sortIcon></th>
+        <th width="13%" pResizableColumn>Natureza</th>
+        <th width="5%" pResizableColumn>Ponto</th>
+        <th width="10%" pResizableColumn>Valor</th>
+        <th width="6%"></th>
+      </tr>
+    </ng-template>
+
+    <!-- CORPO -->
+    <ng-template pTemplate="body" let-linha>
+      <tr [pSelectableRow]="linha">
+        <td>{{ linha.id }}</td>
+        <td>{{ linha.codigo }}</td>
+        <td>{{ linha.descricao }}</td>
+        <td>{{ linha.natureza.nome }}</td>
+        <td>{{ linha.natureza.ponto }}</td>
+        <td>{{ linha.natureza.valor | currency:'BRL' }}</td>
+        <td align="center">
+          <button type="button" pTooltip="editar" (click)="editar(linha.id)" pButton icon="pi pi-pencil"
+            class="ui-button-warning"></button>
+        </td>
+      </tr>
+    </ng-template>
+
+    <!-- RODAPÉ -->
+    <ng-template pTemplate="summary" let-rowData>
+      <div style="text-align:left">
+        <button type="button" pButton icon="pi pi-plus" label="Novo" (click)="add(registro)"></button>
+      </div>
+    </ng-template>
+
+  </p-table>
+
+</p-card>
+
+
+<!-- FORMULARIO DIALOG -->
+<form [formGroup]="form">
+  <p-dialog header="Cadastro" [(visible)]="displayDialog" [focusOnShow]="false" showEffect="fade" [modal]="true"
+    [maximizable]="true" [style]="{width: '60vw'}" [baseZIndex]="10000">
+
+    <br>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-8">
+        <span class="ui-float-label">
+          <input id="float-codigo" type="text" size="30" pInputText formControlName="codigo">
+          <label for="float-codigo">Código</label>
+        </span>
+      </div>
+      <div class="ui-g-4">
+        <p-message severity="error" text={{getErrorMessageCodigo()}}
+          *ngIf="form.controls.codigo.invalid && form.controls.codigo.dirty"></p-message>
+      </div>
+    </div>
+
+
+    <br>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-8">
+        <span class="ui-float-label">
+          <textarea id="float-descricao" formControlName="descricao" pInputTextarea [rows]="5" [cols]="30"
+            autoResize="true"></textarea>
+          <label for="float-descricao">Descrição</label>
+        </span>
+      </div>
+      <div class="ui-g-4">
+        <p-message severity="error" text={{getErrorMessageDescricao()}}
+          *ngIf="form.controls.descricao.invalid && form.controls.descricao.dirty"></p-message>
+      </div>
+    </div>
+
+
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-8">
+        <br>
+        <span class="ui-float-label">
+          <p-dropdown id="float-grupoId" [options]="grupoModel" placeholder="&nbsp;" formControlName="grupoId"
+            [(ngModel)]="comboGrupo" optionLabel="nome" [showClear]="true"></p-dropdown>
+          <label for="float-grupoId">Grupo</label>
+        </span>
+      </div>
+    </div>
+
+
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-8">
+        <br>
+        <span class="ui-float-label">
+
+          <p-dropdown [options]="naturezaModel" [(ngModel)]="comboNatureza" [filter]="true" formControlName="naturezaId" optionLabel="nome">
+            <ng-template let-item pTemplate="selectedItem" >
+              <span style="float:left">{{item.value.nome}}</span>
+              <span style="float:right">{{item.value.valor | currency:'BRL' }}</span>
+            </ng-template>
+            <ng-template let-car pTemplate="item">
+              <div class="ui-helper-clearfix" style="position: relative;height:25px;">
+                <div style="font-size:14px;float:left;margin-top:4px">{{car.value.nome}}</div>
+                <div style="font-size:14px;float:right;margin-top:4px">{{car.value.valor | currency:'BRL' }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+
+        </span>
+      </div>
+    </div>
+
+
+
+
+
+
+    <br>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-8">
+        <span class="ui-float-label">
+          <input id="float-amparoLegal" type="text" size="30" pInputText formControlName="amparoLegal">
+          <label for="float-amparoLegal">Amparo Legal</label>
+        </span>
+      </div>
+      <div class="ui-g-4">
+        <p-message severity="error" text={{getErrorMessageAmparoLegal()}}
+          *ngIf="form.controls.amparoLegal.invalid && form.controls.amparoLegal.dirty"></p-message>
+      </div>
+    </div>
+
+
+    <br>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-8">
+        <span class="ui-float-label">
+          <input id="float-medidaAdm" type="text" size="30" pInputText formControlName="medidaAdm">
+          <label for="float-medidaAdm">Medida Adm</label>
+        </span>
+      </div>
+      <div class="ui-g-4">
+        <p-message severity="error" text={{getErrorMessageMedidaAdm()}}
+          *ngIf="form.controls.medidaAdm.invalid && form.controls.medidaAdm.dirty"></p-message>
+      </div>
+    </div>
+
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-6">
+        <br>
+        <p-checkbox label="Crime" formControlName="crime" binary="true"></p-checkbox>
+      </div>
+      <div class="ui-g-6">
+        <br>
+        <p-checkbox label="Obs. Obrigatoria" formControlName="obsObrigatoria" binary="true"></p-checkbox>
+      </div>
+    </div>
+
+
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-3">
+        <b>Competência</b><br />
+        <p-checkbox label="Municipal" formControlName="competenciaMunicipal" binary="true"></p-checkbox>
+      </div>
+      <div class="ui-g-3">
+        <br>
+        <p-checkbox label="Estadual" formControlName="competenciaEstadual" binary="true"></p-checkbox>
+      </div>
+      <div class="ui-g-2">
+        <br>
+        <p-checkbox label="Rodoviária" formControlName="competenciaRodoviaria" binary="true"></p-checkbox>
+      </div>
+    </div>
+
+
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-6">
+        <b>Infrator</b><br />
+        <p-checkbox label="Condutor" formControlName="infratorCondutor" binary="true"></p-checkbox>
+      </div>
+      <div class="ui-g-6">
+        <br>
+        <p-checkbox label="Proprietário" formControlName="infratorProprietario" binary="true"></p-checkbox>
+      </div>
+    </div>
+
+
+
+    <br>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-8">
+        <span class="ui-float-label">
+          <p-calendar id="float-validadeInicio" formControlName="validadeInicio" dateFormat="dd/mm/yy"
+            showButtonBar="true" [showIcon]="true"></p-calendar>
+          <label for="float-validadeInicio">Início de Validade</label>
+        </span>
+      </div>
+      <div class="ui-g-4">
+        <p-message severity="error" text={{getErrorMessageValidadeInicio()}}
+          *ngIf="form.controls.validadeInicio.invalid && form.controls.validadeInicio.dirty"></p-message>
+      </div>
+    </div>
+
+
+
+
+
+    <p-footer>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix">
+
+        <div class="ui-g">
+          <div class="ui-g-6" style="text-align: left">
+            <button type="button" pButton icon="pi pi-check" label="Salvar" class="ui-button-success"
+              [disabled]="form.invalid" (click)="save()"></button>
+          </div>
+          <div class="ui-g-6" style="text-align: right">
+            <button type="button" pButton (click)="delete()" icon="pi pi-times" label="Deletar" class="ui-button-danger"
+              *ngIf="!newRegistro"></button>
+          </div>
+        </div>
+
+      </div>
+    </p-footer>
+
+  </p-dialog>
+</form>
