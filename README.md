@@ -1,4 +1,42 @@
-# Padrao002
+# CTB.AngularPrimeNg.API
+Código de Trânsito Brasileiro-CTB. Consumindo a API [CTB.AspNetCore.API](https://github.com/volverinejr/CTB.AspNetCore.API "CTB.AspNetCore.API")
+
+Laboratório de estudo abordando:
+- PrimeNg
+	- p-table
+		- Ordenação e filtro por coluna
+		- Paginação
+		- Seleção
+		- Loading
+	- p-dialog
+	- p-card
+	- p-checkbox
+	- p-dropdown
+		- Template
+		- Filtro
+- Http
+	- Post
+	- Puth
+	- Delete
+	- Get
+- Routes
+	- canActivate
+	- canLoad
+	- loadChildren
+	- canDeactivate
+- Pipe
+- Observable
+- Paginação
+
+
+Models com CRUD:
+- Taxa Selic
+- Grupo
+- Natureza
+- Infração
+
+
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.2.
 
