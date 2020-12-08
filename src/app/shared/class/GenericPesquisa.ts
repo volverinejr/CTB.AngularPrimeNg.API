@@ -1,4 +1,8 @@
 export interface GenericPesquisa {
-  data?: any[];
-  total?: number;
+  content?: any[];
+  empty?: boolean;
+  size?: number;
+  totalElements?: number;
+  totalPages?: number;
+  number?: number;
 }

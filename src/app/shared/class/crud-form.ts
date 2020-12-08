@@ -38,12 +38,11 @@ export abstract class CrudForm<T> {
   protected carregarGrid() {
     this.carregando = true;
 
-
     this.service.getAll(null, 'All', this.pagNumero, this.pagQtd, this.pagCampo, this.pagOrdem, this.pagFiltro).subscribe(
       (res: GenericPesquisa) => {
 
-        this.dataSouce = res.data;
-        this.totalRecords = res.total;
+        this.dataSouce = res.content;
+        this.totalRecords = res.totalElements;
 
         this.carregando = false;
       },

@@ -12,7 +12,8 @@ export class CrudService<T> {
 
 
   public getAll(token, tipo, pagina, qtd, campo, ordem, filtro) {
-    const parametros = `${this.API_URL}/pesquisa/${pagina}/${qtd}/${campo}/${ordem}/${filtro}`;
+    // const parametros = `${this.API_URL}/${pagina}/${qtd}/${campo}/${ordem}/${filtro}`;
+    const parametros = `${this.API_URL}`;
 
     return this.http.get<GenericPesquisa>(parametros)
       .pipe(
@@ -41,7 +42,7 @@ export class CrudService<T> {
   }
 
   private update(model: T, token) {
-    return this.http.put(`${this.API_URL}`, model).pipe(take(1));
+    return this.http.put(`${this.API_URL}/${model['id']}`, model).pipe(take(1));
   }
 
 

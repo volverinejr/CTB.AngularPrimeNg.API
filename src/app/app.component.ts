@@ -24,10 +24,30 @@ export class AppComponent implements OnInit {
       {
         icon: 'pi pi-home', command: () => { this.clicked(''); }
       },
+
       {
-        label: 'Cadastro Base',
+        label: 'Base',
+        items: [
+          { label: 'Insubsistência', icon: 'pi pi-th-large', command: () => { this.clicked('insubsistencia'); } },
+          { label: 'Ent. Autuadora', icon: 'pi pi-map-marker', command: () => { this.clicked('entidadeautuadora'); } },
+          { label: 'Agente', icon: 'pi pi-fw pi-users', command: () => { this.clicked('agente'); } },
+        ]
+      },
+
+      {
+        label: 'Infração',
         items: [
           { label: 'Grupo', icon: 'pi pi-th-large', command: () => { this.clicked('grupo'); } },
+          { label: 'Artigo', icon: 'pi pi-th-large', command: () => { this.clicked('artigo'); } },
+          { label: 'Natureza', icon: 'pi pi-th-large', command: () => { this.clicked('natureza'); } },
+        ]
+      },
+
+      {
+        label: 'Veículo',
+        items: [
+          { label: 'Grupo', icon: 'pi pi-th-large', command: () => { this.clicked('grupo'); } },
+          { label: 'Insubsistência', icon: 'pi pi-th-large', command: () => { this.clicked('insubsistencia'); } },
           { label: 'Natureza', icon: 'pi pi-fw pi-users', command: () => { this.clicked('natureza'); } },
           { label: 'Taxa Selic', icon: 'pi pi-list', command: () => { this.clicked('taxaselic'); } },
           { label: 'Infração', icon: 'pi pi-user-plus', command: () => { this.clicked('infracao'); } },

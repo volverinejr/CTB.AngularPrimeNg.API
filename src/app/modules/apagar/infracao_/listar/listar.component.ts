@@ -189,7 +189,7 @@ export class ListarComponent extends CrudForm<InfracaoModel> implements OnInit {
     this.serviceGrupo.getAll('', '', 0, 500, 'Nome', 1, '').subscribe(
       (res: GenericPesquisa) => {
 
-        this.grupoModel = res.data;
+        this.grupoModel = res.content;
       },
       (error: any) => {
         this.msgErro(error.error.data);
@@ -201,7 +201,7 @@ export class ListarComponent extends CrudForm<InfracaoModel> implements OnInit {
   carregarNatureza() {
     this.serviceNatureza.getAll('', '', 0, 500, 'Nome', 1, '').subscribe(
       (res: GenericPesquisa) => {
-        this.naturezaModel = res.data;
+        this.naturezaModel = res.content;
 
 
 /*         this.cars = [

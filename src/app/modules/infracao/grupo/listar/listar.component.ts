@@ -3,11 +3,11 @@ import { Component, OnInit } from '@angular/core';
 
 import { LazyLoadEvent, ConfirmationService, MessageService } from 'primeng/api';
 
-import { CrudForm } from '../../../shared/class/crud-form';
+import { CrudForm } from '../../../../shared/class/crud-form';
 
 
 // MODULO QUE IRÁ TRABALHAR
-import { GrupoModel } from './../../../shared/models/GrupoModel';
+import { GrupoModel } from '../../../../shared/models/infracao/GrupoModel';
 import { GrupoService } from './../grupo.service';
 
 

@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
 
-import { AppCommonModule } from './../../app.common.module';
+import { AppCommonModule } from './../../../app.common.module';
 
 
 import { GrupoService } from './grupo.service';

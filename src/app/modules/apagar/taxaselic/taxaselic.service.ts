@@ -15,7 +15,7 @@ export class TaxaSelicService extends CrudService<TaxaSelicModel>{
   constructor(
     protected http: HttpClient
   ) {
-    super(http, `${environment.API}v1/taxaselic`);
+    super(http, `${environment.API_INFRACAO}v1/taxaselic`);
   }
 
 }

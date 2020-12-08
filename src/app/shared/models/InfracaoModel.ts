@@ -1,5 +1,5 @@
 import { NaturezaModel } from './NaturezaModel';
-import { GrupoModel } from './GrupoModel';
+import { GrupoModel } from './infracao/GrupoModel';
 export interface InfracaoModel {
   id?: number;
   codigo?: string;

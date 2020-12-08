@@ -15,7 +15,7 @@ export class NaturezaService extends CrudService<NaturezaModel>{
   constructor(
     protected http: HttpClient
   ) {
-    super(http, `${environment.API}v1/natureza`);
+    super(http, `${environment.API_INFRACAO}v1/natureza`);
   }
 
 }
