@@ -31,7 +31,7 @@ sortField="id" sortOrder="1"
   <ng-template pTemplate="caption">
     <div class="ui-g">
       <div class="ui-g-4"></div>
-      <div class="ui-g-4">Artigo</div>
+      <div class="ui-g-4">Infração</div>
       <div class="ui-g-4" style="text-align: right">
         <input type="text" pInputText size="30" pTooltip="filtra por coluna selecionada" placeholder="Filtrar" (input)="dt.filterGlobal($event.target.value, 'contains')">
       </div>
@@ -42,7 +42,8 @@ sortField="id" sortOrder="1"
   <ng-template pTemplate="header" class="ui-column-title">
     <tr>
       <th width="20%" pResizableColumn pSortableColumn="id"># <p-sortIcon field="id"></p-sortIcon></th>
-      <th pResizableColumn pSortableColumn="nome">Nome <p-sortIcon field="nome"></p-sortIcon></th>
+      <th width="20%" pResizableColumn pSortableColumn="codigo">Código <p-sortIcon field="codigo"></p-sortIcon></th>
+      <th pResizableColumn pSortableColumn="descricao">Descrição <p-sortIcon field="descricao"></p-sortIcon></th>
       <th width="6%"></th>
     </tr>
   </ng-template>
@@ -51,7 +52,8 @@ sortField="id" sortOrder="1"
   <ng-template pTemplate="body" let-linha>
     <tr [pSelectableRow]="linha">
       <td>{{ linha.id }}</td>
-      <td>{{ linha.nome }}</td>
+      <td>{{ linha.codigo }}</td>
+      <td>{{ linha.descricao }}</td>
       <td align="center">
         <button type="button" pTooltip="editar" (click)="editar(linha.id)" pButton icon="pi pi-pencil" class="ui-button-warning"></button>
       </td>
@@ -76,19 +78,69 @@ sortField="id" sortOrder="1"
     header="Cadastro" [(visible)]="displayDialog" [focusOnShow]="false" showEffect="fade" [modal]="true"
     [maximizable]="true" [style]="{width: '60vw'}" [baseZIndex]="10000" >
 
+
     <br>
     <div class="ui-g ui-fluid">
       <div class="ui-g-8">
         <span class="ui-float-label">
-          <input id="float-input" type="text" size="30" maxlength="10" pInputText formControlName="nome" >
-          <label for="float-input">Nome</label>
+          <input id="float-input" type="text" size="30" maxlength="6" pInputText formControlName="codigo" >
+          <label for="float-input">Código</label>
         </span>
       </div>
       <div class="ui-g-4">
-        <p-message severity="error" text={{getErrorMessageNome()}}
-          *ngIf="form.controls.nome.invalid && form.controls.nome.dirty"></p-message>
+        <p-message severity="error" text={{getErrorMessageCodigo()}}
+          *ngIf="form.controls.codigo.invalid && form.controls.codigo.dirty"></p-message>
       </div>
     </div>
+
+
+
+
+
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-8">
+        <br>
+        <span class="ui-float-label">
+          <p-dropdown id="float-grupoId" [options]="grupoModel" placeholder="&nbsp;" formControlName="grupo"
+            optionLabel="nome" [showClear]="true"></p-dropdown>
+          <label for="float-grupoId">Grupo</label>
+        </span>
+      </div>
+      <div class="ui-g-4">
+        <p-message severity="error" text={{getErrorMessageGrupo()}}
+          *ngIf="form.controls.grupo.invalid && form.controls.grupo.dirty"></p-message>
+      </div>
+    </div>
+
+
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-8">
+        <br>
+        <span class="ui-float-label">
+          <p-dropdown id="float-grupoId" [options]="artigoModel" placeholder="&nbsp;" formControlName="artigo"
+            optionLabel="nome" [showClear]="true"></p-dropdown>
+          <label for="float-grupoId">Artigo</label>
+        </span>
+      </div>
+    </div>
+
+
+
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-8">
+        <br>
+        <span class="ui-float-label">
+          <p-dropdown id="float-grupoId" [options]="naturezaModel" placeholder="&nbsp;" formControlName="natureza"
+            optionLabel="nome" [showClear]="true"></p-dropdown>
+          <label for="float-grupoId">Natureza</label>
+        </span>
+      </div>
+    </div>
+
+
+
+
+
 
     <br>
     <div class="ui-g ui-fluid">
@@ -103,6 +155,85 @@ sortField="id" sortOrder="1"
           *ngIf="form.controls.descricao.invalid && form.controls.descricao.dirty"></p-message>
       </div>
     </div>
+
+    <br>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-8">
+        <span class="ui-float-label">
+          <input id="float-input" type="text" size="30" maxlength="10" pInputText formControlName="amparoLegal" >
+          <label for="float-input">Amparo Legal</label>
+        </span>
+      </div>
+      <div class="ui-g-4">
+        <p-message severity="error" text={{getErrorMessageAmparoLegal()}}
+          *ngIf="form.controls.amparoLegal.invalid && form.controls.amparoLegal.dirty"></p-message>
+      </div>
+    </div>
+
+
+    <br>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-8">
+        <span class="ui-float-label">
+          <input id="float-input" type="text" size="30" maxlength="10" pInputText formControlName="medidaAdm" >
+          <label for="float-input">Medida Adm</label>
+        </span>
+      </div>
+      <div class="ui-g-4">
+        <p-message severity="error" text={{getErrorMessageMedidaAdm()}}
+          *ngIf="form.controls.medidaAdm.invalid && form.controls.medidaAdm.dirty"></p-message>
+      </div>
+    </div>
+
+
+    <br>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-3">
+        <b>Competência</b><br />
+        <p-checkbox label="Municipal" formControlName="competenciaMunicipal" binary="true"></p-checkbox>
+      </div>
+      <div class="ui-g-3">
+        <br>
+        <p-checkbox label="Estadual" formControlName="competenciaEstadual" binary="true"></p-checkbox>
+      </div>
+      <div class="ui-g-2">
+        <br>
+        <p-checkbox label="Rodoviária" formControlName="competenciaRodoviaria" binary="true"></p-checkbox>
+      </div>
+    </div>
+
+
+    <br>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-4">
+        <br>
+        <p-checkbox label="Crime" formControlName="crime" binary="true"></p-checkbox>
+      </div>
+      <div class="ui-g-4">
+        <br>
+        <p-checkbox label="Obs. Obrigatoria" formControlName="obsObrigatoria" binary="true"></p-checkbox>
+      </div>
+      <div class="ui-g-4">
+        <br>
+        <p-checkbox label="Pode Apresentar Condutor" formControlName="podeApresentarCondutorInfrator" binary="true"></p-checkbox>
+      </div>
+    </div>
+
+    <br>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-8">
+        <span class="ui-float-label">
+          <p-calendar id="float-validadeInicio" formControlName="validadeInicio" dateFormat="dd/mm/yy"
+            showButtonBar="true" [showIcon]="true"></p-calendar>
+          <label for="float-validadeInicio">Início de Validade</label>
+        </span>
+      </div>
+      <div class="ui-g-4">
+        <p-message severity="error" text={{getErrorMessageValidadeInicio()}}
+          *ngIf="form.controls.validadeInicio.invalid && form.controls.validadeInicio.dirty"></p-message>
+      </div>
+    </div>
+
 
 
     <p-footer>

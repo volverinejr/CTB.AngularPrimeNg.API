@@ -46,6 +46,12 @@ const routes: Routes = [
     canLoad: [AuthGuard],
     canActivate: [AuthGuard]
   },
+  {
+    path: 'infracao',
+    loadChildren: () => import('./modules/infracao/infracao/infracao.module').then(m => m.InfracaoModule),
+    canLoad: [AuthGuard],
+    canActivate: [AuthGuard]
+  },
 
 ];
 

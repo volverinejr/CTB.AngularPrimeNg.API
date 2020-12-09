@@ -37,9 +37,10 @@ export class AppComponent implements OnInit {
       {
         label: 'Infração',
         items: [
-          { label: 'Grupo', icon: 'pi pi-th-large', command: () => { this.clicked('grupo'); } },
-          { label: 'Artigo', icon: 'pi pi-th-large', command: () => { this.clicked('artigo'); } },
-          { label: 'Natureza', icon: 'pi pi-th-large', command: () => { this.clicked('natureza'); } },
+          { label: 'Grupo', icon: 'pi pi-tags', command: () => { this.clicked('grupo'); } },
+          { label: 'Artigo', icon: 'pi pi-ticket', command: () => { this.clicked('artigo'); } },
+          { label: 'Natureza', icon: 'pi pi-tablet', command: () => { this.clicked('natureza'); } },
+          { label: 'Infração', icon: 'pi pi-star', command: () => { this.clicked('infracao'); } },
         ]
       },
 

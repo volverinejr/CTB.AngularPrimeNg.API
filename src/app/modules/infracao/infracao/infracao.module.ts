@@ -7,8 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppCommonModule } from '../../../app.common.module';
 
 
-import { ArtigoService } from './artigo.service';
-import { ArtigoRoutingModule } from './artigo-routing.module';
+import { InfracaoService } from './infracao.service';
+import { InfracaoRoutingModule } from './infracao-routing.module';
 import { ListarComponent } from './listar/listar.component';
 
 
@@ -20,9 +20,9 @@ import { ListarComponent } from './listar/listar.component';
     HttpClientModule,
     RouterModule,
     AppCommonModule,
-    ArtigoRoutingModule,
+    InfracaoRoutingModule,
   ],
   exports: [ListarComponent],
-  providers: [ArtigoService],
+  providers: [InfracaoService],
 })
-export class ArtigoModule { }
+export class InfracaoModule { }

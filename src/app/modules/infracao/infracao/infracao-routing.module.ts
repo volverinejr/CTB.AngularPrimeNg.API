@@ -3,12 +3,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ListarComponent } from './listar/listar.component';
 
-const artigoRoutes: Routes = [
+const infracaoRoutes: Routes = [
   { path: '', component: ListarComponent }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(artigoRoutes)],
+  imports: [RouterModule.forChild(infracaoRoutes)],
   exports: [RouterModule]
 })
-export class ArtigoRoutingModule { }
+export class InfracaoRoutingModule { }
