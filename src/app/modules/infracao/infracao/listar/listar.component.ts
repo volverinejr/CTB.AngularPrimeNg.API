@@ -114,8 +114,9 @@ export class ListarComponent extends CrudForm<InfracaoModel> implements OnInit {
       competenciaEstadual: [false],
       competenciaRodoviaria: [false],
       podeApresentarCondutorInfrator: [false],
-      validadeInicio: ['', Validators.compose([Validators.required])],
+      validadeInicioFormatada: ['', Validators.compose([Validators.required])],
       validadeFim: [],
+
     });
   }
   getErrorMessageCodigo() {
@@ -171,8 +172,8 @@ export class ListarComponent extends CrudForm<InfracaoModel> implements OnInit {
     return '';
   }
 
-  getErrorMessageValidadeInicio() {
-    if (this.form.controls.validadeInicio.hasError('required')) {
+  getErrorMessageValidadeInicioFormatada() {
+    if (this.form.controls.validadeInicioFormatada.hasError('required')) {
       return 'Campo Requerido';
     }
     return '';

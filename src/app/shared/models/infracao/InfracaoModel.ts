@@ -19,4 +19,5 @@ export interface InfracaoModel {
   podeApresentarCondutorInfrator?: boolean;
   validadeInicio?: Date;
   validadeFim?: Date;
+  validadeInicioFormatada?: string;
 }

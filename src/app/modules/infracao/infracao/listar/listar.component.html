@@ -223,14 +223,14 @@ sortField="id" sortOrder="1"
     <div class="ui-g ui-fluid">
       <div class="ui-g-8">
         <span class="ui-float-label">
-          <p-calendar id="float-validadeInicio" formControlName="validadeInicio" dateFormat="dd/mm/yy"
+          <p-calendar id="float-validadeInicioFormatada" formControlName="validadeInicioFormatada" dateFormat="dd/mm/yy"
             showButtonBar="true" [showIcon]="true"></p-calendar>
-          <label for="float-validadeInicio">Início de Validade</label>
+          <label for="float-validadeInicioFormatada">Início de Validade</label>
         </span>
       </div>
       <div class="ui-g-4">
-        <p-message severity="error" text={{getErrorMessageValidadeInicio()}}
-          *ngIf="form.controls.validadeInicio.invalid && form.controls.validadeInicio.dirty"></p-message>
+        <p-message severity="error" text={{getErrorMessageValidadeInicioFormatada()}}
+          *ngIf="form.controls.validadeInicioFormatada.invalid && form.controls.validadeInicioFormatada.dirty"></p-message>
       </div>
     </div>
 
