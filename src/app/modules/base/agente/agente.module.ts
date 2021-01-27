@@ -12,7 +12,6 @@ import { AgenteRoutingModule } from './agente-routing.module';
 import { ListarComponent } from './listar/listar.component';
 
 
-
 @NgModule({
   declarations: [ListarComponent],
   imports: [

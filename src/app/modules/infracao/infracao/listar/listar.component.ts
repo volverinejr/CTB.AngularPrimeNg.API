@@ -83,6 +83,11 @@ export class ListarComponent extends CrudForm<InfracaoModel> implements OnInit {
     this.messageService.add({ severity: 'success', summary: mensagem });
   }
 
+  msgErroSimples(mensagem: string) {
+    this.messageService.add({ severity: 'error', summary: mensagem });
+  }
+
+
 
   delete() {
     this.confirmationService.confirm({

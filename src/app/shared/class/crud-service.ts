@@ -1,5 +1,5 @@
 import { GenericPesquisa } from './GenericPesquisa';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { take, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 
@@ -13,15 +13,45 @@ export class CrudService<T> {
 
   public getAll(token, tipo, pagina, qtd, campo, ordem, filtro) {
     // const parametros = `${this.API_URL}/${pagina}/${qtd}/${campo}/${ordem}/${filtro}`;
-    const parametros = `${this.API_URL}`;
+    // const uri = `${this.API_URL}`;
+    let aplicandoFiltro = '';
 
-    return this.http.get<GenericPesquisa>(parametros)
+    if (filtro != '') {
+      if (campo == 'id') {
+        if ( isNaN(filtro) ) {
+          filtro = '1';
+        }
+
+        aplicandoFiltro = '/findByIdGreaterThanEqual/' + filtro
+      }
+      else if (campo == 'nome') {
+        aplicandoFiltro = '/findByNome/' + filtro
+      }
+      else if (campo == 'descricao') {
+        aplicandoFiltro = '/findByDescricao/' + filtro
+      }
+    }
+
+    if (ordem == -1) {
+      campo = '-' + campo;
+    }
+
+    let httpParams = new HttpParams();
+    httpParams = httpParams.set('page', pagina);
+    httpParams = httpParams.set('size', qtd);
+    httpParams = httpParams.set('sort', campo);
+
+
+    return this.http.get<GenericPesquisa>(`${this.API_URL}${aplicandoFiltro}`, {
+      params: httpParams
+    })
       .pipe(
         take(1),
         debounceTime(2000),
         distinctUntilChanged(),
       );
   }
+
 
   public getById(id: string, token) {
     return this.http.get<T>(`${this.API_URL}/${id}`).pipe(take(1));

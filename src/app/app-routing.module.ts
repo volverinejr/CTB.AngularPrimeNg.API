@@ -7,6 +7,57 @@ import { AuthGuard } from './core/guards/auth.guard';
 
 
 const routes: Routes = [
+  // TICKET
+  {
+    path: 'sistema',
+    loadChildren: () => import('./modules/ticket/sistema/sistema.module').then(m => m.SistemaModule),
+    canLoad: [AuthGuard],
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'pessoa',
+    loadChildren: () => import('./modules/ticket/pessoa/pessoa.module').then(m => m.PessoaModule),
+    canLoad: [AuthGuard],
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'tipotarefa',
+    loadChildren: () => import('./modules/ticket/tipotarefa/tipo-tarefa.module').then(m => m.TipoTarefaModule),
+    canLoad: [AuthGuard],
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'cliente',
+    loadChildren: () => import('./modules/ticket/cliente/cliente.module').then(m => m.ClienteModule),
+    canLoad: [AuthGuard],
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'sprint',
+    loadChildren: () => import('./modules/ticket/sprint/sprint.module').then(m => m.SprintModule),
+    canLoad: [AuthGuard],
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'time',
+    loadChildren: () => import('./modules/ticket/time/time.module').then(m => m.TimeModule),
+    canLoad: [AuthGuard],
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'solicitacao',
+    loadChildren: () => import('./modules/ticket/solicitacao/solicitacao.module').then(m => m.SolicitacaoModule),
+    canLoad: [AuthGuard],
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'solicitacaoanalise',
+    loadChildren: () => import('./modules/ticket/solicitacaoanalise/solicitacaoanalise.module').then(m => m.SolicitacaoAnaliseModule),
+    canLoad: [AuthGuard],
+    canActivate: [AuthGuard]
+  },
+
+
   // BASE
   {
     path: 'insubsistencia',

@@ -1,0 +1,208 @@
+<!-- NÃO RETIRAR  -->
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
+<p-toast [showTransitionOptions]="'300ms'"></p-toast>
+
+<br>
+<p-card>
+
+<!-- GRID -->
+<p-table
+#dt
+[value]="dataSouce"
+[loading]="carregando"
+[paginator]="true"
+[showCurrentPageReport]="true"
+currentPageReportTemplate="{first} de {last} | Total {totalRecords} registros."
+emptymessage="Nenhum registro encontrado"
+selectionMode="single"
+[resizableColumns]="true"
+[rowsPerPageOptions]="[10,25,50]"
+totalRecords="{{totalRecords}}"
+[rows]="10"
+[lazy]="true"
+(onLazyLoad)="lazyLoad($event)"
+[lazyLoadOnInit]="false"
+
+
+[globalFilterFields]="['id', 'nome']"
+sortField="id" sortOrder="1"
+>
+
+  <ng-template pTemplate="caption">
+    <div class="ui-g">
+      <div class="ui-g-4"></div>
+      <div class="ui-g-4">Cliente</div>
+      <div class="ui-g-4" style="text-align: right">
+        <input type="text" pInputText size="30" pTooltip="filtra por coluna selecionada" placeholder="Filtrar" (input)="dt.filterGlobal($event.target.value, 'contains')">
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- CABECALHO -->
+  <ng-template pTemplate="header" class="ui-column-title">
+    <tr>
+      <th width="20%" pResizableColumn pSortableColumn="id"># <p-sortIcon field="id"></p-sortIcon></th>
+      <th pResizableColumn pSortableColumn="nome">Nome <p-sortIcon field="nome"></p-sortIcon></th>
+      <th width="10%">Ativo</th>
+      <th width="12%"></th>
+    </tr>
+  </ng-template>
+
+  <!-- CORPO -->
+  <ng-template pTemplate="body" let-linha>
+    <tr [pSelectableRow]="linha">
+      <td>{{ linha.id }}</td>
+      <td>{{ linha.nome }}</td>
+      <td>{{ linha.ativo | yesNo}}</td>
+      <td>
+        <button type="button" pTooltip="editar" (click)="editar(linha.id)" pButton icon="pi pi-pencil" class="ui-button-warning"></button>
+        <button type="button" pTooltip="Add Sistema" (click)="AddSistema(linha.id)" pButton icon="pi pi-plus" class="ui-button-success"></button>
+      </td>
+    </tr>
+  </ng-template>
+
+  <!-- RODAPÉ -->
+  <ng-template pTemplate="summary" let-rowData>
+    <div style="text-align:left">
+      <button type="button" pButton icon="pi pi-plus" label="Novo" (click)="add(registro)"></button>
+    </div>
+  </ng-template>
+
+</p-table>
+
+</p-card>
+
+
+<!-- FORMULARIO DIALOG -->
+<form [formGroup]="form">
+  <p-dialog
+    header="Cadastro" [(visible)]="displayDialog" [focusOnShow]="false" showEffect="fade" [modal]="true"
+    [maximizable]="true" [style]="{width: '60vw'}" [baseZIndex]="10000" >
+
+    <br>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-8">
+        <span class="ui-float-label">
+          <input id="float-input" type="text" size="30" pInputText formControlName="nome" >
+          <label for="float-input">Nome</label>
+        </span>
+      </div>
+      <div class="ui-g-4">
+        <p-message severity="error" text={{getErrorMessageNome()}}
+          *ngIf="form.controls.nome.invalid && form.controls.nome.dirty"></p-message>
+      </div>
+    </div>
+
+
+
+    <br>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-8">
+        <span class="ui-float-label">
+          <p-checkbox label="Ativo" formControlName="ativo" binary="true"></p-checkbox>
+        </span>
+      </div>
+    </div>
+
+
+
+
+    <p-footer>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix">
+
+        <div class="ui-g">
+          <div class="ui-g-6" style="text-align: left">
+            <button type="button" pButton icon="pi pi-check" label="Salvar" class="ui-button-success"
+            [disabled]="form.invalid" (click)="save()" ></button>
+          </div>
+          <div class="ui-g-6" style="text-align: right">
+            <button type="button" pButton (click)="delete()" icon="pi pi-times" label="Deletar" class="ui-button-danger"
+            *ngIf="!newRegistro"></button>
+          </div>
+        </div>
+
+      </div>
+    </p-footer>
+
+  </p-dialog>
+</form>
+
+
+
+
+
+
+
+
+
+<!-- FORMULARIO ADD SISTEMA -->
+<form>
+  <p-dialog
+    header="Add Sistema ao Cliente" [(visible)]="displayDialogAddSistema" [focusOnShow]="false" showEffect="fade" [modal]="true"
+    [maximizable]="true" [style]="{width: '60vw'}" [baseZIndex]="10000" >
+
+
+
+
+    <br>
+    <p-card>
+
+    <!-- GRID -->
+    <p-table
+    #dtSistema
+    [value]="sistemasDoCliente"
+    [loading]="carregando"
+    [paginator]="true"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="{first} de {last} | Total {totalRecords} registros."
+    emptymessage="Nenhum registro encontrado"
+    selectionMode="single"
+    [resizableColumns]="true"
+    totalRecords="{{totalSistemasDoCliente}}"
+    [rows]="5"
+    [lazy]="true"
+    (onLazyLoad)="lazyLoadSistema($event)"
+    [lazyLoadOnInit]="false"
+    [(first)]="firstSistema"
+
+
+    [globalFilterFields]="['id', 'nome']"
+    sortField="id" sortOrder="1"
+    >
+
+      <ng-template pTemplate="caption">
+        <div class="ui-g">
+          <div class="ui-g-4"></div>
+          <div class="ui-g-4">Cliente X Sistema</div>
+        </div>
+      </ng-template>
+
+      <!-- CABECALHO -->
+      <ng-template pTemplate="header" class="ui-column-title">
+        <tr>
+          <th width="20%" pResizableColumn pSortableColumn="id"># <p-sortIcon field="id"></p-sortIcon></th>
+          <th pResizableColumn pSortableColumn="nome">Nome <p-sortIcon field="nome"></p-sortIcon></th>
+          <th width="12%"></th>
+        </tr>
+      </ng-template>
+
+      <!-- CORPO -->
+      <ng-template pTemplate="body" let-linhaSistema>
+        <tr [pSelectableRow]="linhaSistema">
+          <td>{{ linhaSistema.id }}</td>
+          <td>{{ linhaSistema.nome }}</td>
+          <td>
+            <button type="button" *ngIf="!linhaSistema.cadastrado" pTooltip="Add Sistema" (click)="AddSistemaCliente(linhaSistema.id)" pButton icon="pi pi-plus" class="ui-button-success"></button>
+            <button type="button" *ngIf="linhaSistema.cadastrado" pTooltip="Remover Sistema" (click)="RemoverSistemaCliente(linhaSistema.id)" pButton icon="pi pi-minus" class="ui-button-danger"></button>
+          </td>
+        </tr>
+      </ng-template>
+
+    </p-table>
+
+    </p-card>
+
+
+  </p-dialog>
+</form>
+

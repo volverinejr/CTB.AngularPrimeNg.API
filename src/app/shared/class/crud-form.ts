@@ -84,6 +84,8 @@ export abstract class CrudForm<T> {
 
     this.service.getById(id, '').subscribe(
       (res: T) => {
+        this.form.reset();
+
         this.newRegistro = false;
         this.registro = res;
 
@@ -119,7 +121,12 @@ export abstract class CrudForm<T> {
           this.displayDialog = false;
         },
         (error: any) => {
-          this.msgErro(error.error.data);
+          if (error.error.code == "404") {
+            this.msgErroSimples(error.error.msg);
+          }
+          else {
+            this.msgErro(error.error.erros);
+          }
         }
       );
     }
@@ -146,6 +153,8 @@ export abstract class CrudForm<T> {
   abstract msgErro(array: any);
 
   abstract msgSucesso(mensagem: string);
+
+  abstract msgErroSimples(mensagem: string);
 
   abstract iniciarForm();
 

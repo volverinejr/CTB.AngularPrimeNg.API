@@ -7,6 +7,7 @@ export const environment = {
   API_INFRACAO: '/ModuloInfracao',
   API_BASE: '/ModuloBase',
   API_VEICULO: '/ModuloVeiculo',
+  API_TICKET: '/ModuloTicket',
 };
 
 /*
