@@ -31,4 +31,17 @@ export class SolicitacaoService extends CrudService<SolicitacaoModel>{
       );
   }
 
+
+  public getSprintPrioridade(idSprint: number, prioridade: number) {
+
+    return this.http.get<GenericPesquisa>(`${environment.API_TICKET}/solicitacoes/sprint/${idSprint}/prioridade/${prioridade}`)
+      .pipe(
+        take(1),
+        debounceTime(2000),
+        distinctUntilChanged(),
+      );
+  }
+
+
+
 }

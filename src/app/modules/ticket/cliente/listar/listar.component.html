@@ -56,7 +56,7 @@ sortField="id" sortOrder="1"
       <td>{{ linha.ativo | yesNo}}</td>
       <td>
         <button type="button" pTooltip="editar" (click)="editar(linha.id)" pButton icon="pi pi-pencil" class="ui-button-warning"></button>
-        <button type="button" pTooltip="Add Sistema" (click)="AddSistema(linha.id)" pButton icon="pi pi-plus" class="ui-button-success"></button>
+        <button type="button" pTooltip="Add Sistema" (click)="AddSistema(linha.id)" pButton icon="pi pi-briefcase" class="ui-button-success"></button>
       </td>
     </tr>
   </ng-template>
@@ -112,11 +112,11 @@ sortField="id" sortOrder="1"
 
         <div class="ui-g">
           <div class="ui-g-6" style="text-align: left">
-            <button type="button" pButton icon="pi pi-check" label="Salvar" class="ui-button-success"
+            <button type="button" pButton icon="pi pi-save" label="Salvar" class="ui-button-success"
             [disabled]="form.invalid" (click)="save()" ></button>
           </div>
           <div class="ui-g-6" style="text-align: right">
-            <button type="button" pButton (click)="delete()" icon="pi pi-times" label="Deletar" class="ui-button-danger"
+            <button type="button" pButton (click)="delete()" icon="pi pi-trash" label="Deletar" class="ui-button-danger"
             *ngIf="!newRegistro"></button>
           </div>
         </div>

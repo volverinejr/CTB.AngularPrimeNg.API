@@ -238,10 +238,12 @@ export class ListarComponent extends CrudForm<SprintModel> implements OnInit {
 
     this.carregando = true;
 
-    this.serviceSolicitacao.getAnalisePrioridade(prioridade).subscribe(
+    this.serviceSolicitacao.getSprintPrioridade(this.sprintSelecionada, prioridade).subscribe(
       (res: GenericPesquisa) => {
 
-        this.dataSoucePrioridade = res.content;
+        console.log(res.content);
+
+        //this.dataSoucePrioridade = res.content;
 
         this.carregando = false;
       },
@@ -256,6 +258,7 @@ export class ListarComponent extends CrudForm<SprintModel> implements OnInit {
 
   addBacklogASprint(id: number){
     this.sprintSelecionada = id;
+
     this.displayDialogBacklogSprint = true;
   }
 
